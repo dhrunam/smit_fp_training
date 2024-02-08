@@ -5,6 +5,7 @@ class BusinessCategory(models.Model):
     category_name=models.CharField(max_length=128 , null=False)
     category_details=models.CharField(max_length=128 , null=False)
     parent_category=models.ForeignKey("self" , null=True , on_delete=models.SET_NULL,related_name="business_category")
+    category_image_url=models.FileField(upload_to='category/' , null=True , blank=True)
 
 class BusinessAdderess(models.Model):
     business_category=models.ForeignKey(BusinessCategory , null=True , on_delete=models.SET_NULL)
@@ -15,3 +16,4 @@ class BusinessAdderess(models.Model):
     district=models.CharField(max_length=130 , null=False)
     state=models.CharField(null=False, max_length=50)
     pin=models.CharField(null=False, max_length=6)
+    logo_url=models.FileField(upload_to='business_logo/' , null=True , blank=True)
