@@ -3,7 +3,8 @@ from account import serializers
 from account.models import UserProfile
 from rest_framework import generics , response , status
 from django.contrib.auth.models import User , Group
-from django.db import transaction , connection
+from django.db import transaction 
+from django.contrib.auth import authenticate
 
 from django.contrib.auth.hashers import make_password
 
@@ -42,4 +43,13 @@ class RegisterUser(generics.CreateAPIView):
         # except :
         #     return response.Response({"error":"An error occured while registering user"},status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
+class LoginUser(generics.GenericAPIView):
+      def post(self ,request, *args, **kwargs):
+            username = request.data.get('username')
+            password = request.data.get('password')
             
+            user = authenticate(username=username , password=password)
+            if user is not None:
+                  return response.Response("login succesfully done")
+            else:
+                  return response.Response("login failed credentail not found")
